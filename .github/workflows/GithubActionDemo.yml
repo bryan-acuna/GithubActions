@@ -1,0 +1,48 @@
+
+name: A basic worflow
+
+on: 
+    push:
+        branches: ["main"]
+    pull_request:
+        branches: ["main"]
+
+    workflow_dispatch:
+
+
+jobs:
+    build-app:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+
+
+
+            - name: Run a one line script
+              run: echo Checking out Docker
+
+
+            - name: Run a multi-line script
+              run: 
+                    echo Add other actions to build,
+                    echo test, and deploy your project.
+
+    build-api:
+        runs-on: windows-latest
+        steps:
+            - uses: echo "building API"
+
+    build-db:
+        needs: build-app
+        runs-on: windows-latest
+        steps:
+            - run: echo "Hello World"
+
+    package:
+        needs: [build-db, build-app]
+        runs-on: macos-latest
+        steps:
+            - run: echo "Hello Mac"
+
+
+    
